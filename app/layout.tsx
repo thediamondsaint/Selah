@@ -40,17 +40,22 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <nav style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
             {[
               { href: '/tutor', label: 'Tutor' },
-              { href: '/plain', label: 'Plain Language' },
+              { href: '/plain', label: 'Plain' },
+              { href: '/plans', label: 'Plans' },
+              { href: '/devotional', label: 'Devotional' },
+              { href: '/search', label: 'Search' },
+              { href: '/prayer', label: 'Prayer' },
             ].map(({ href, label }) => (
               <Link
                 key={href}
                 href={href}
                 style={{
-                  fontSize: '13px',
-                  color: '#666',
-                  padding: '5px 10px',
+                  fontSize: '12px',
+                  color: '#555',
+                  padding: '5px 8px',
                   borderRadius: '6px',
                   transition: 'color 0.15s',
+                  whiteSpace: 'nowrap',
                 }}
               >
                 {label}

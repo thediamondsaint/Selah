@@ -24,18 +24,55 @@ const FEATURES = [
     description: 'Any verse rewritten in clear modern English — for any reading level, from age 8 to adult.',
     cta: 'Try it',
   },
-]
-
-const COMING_SOON = [
-  { icon: '🗓', title: 'Reading Plans', description: 'Personalized plans built around your goals and schedule.' },
-  { icon: '✉', title: 'Daily Devotional', description: 'A fresh AI-written devotional in your inbox every morning.' },
-  { icon: '🔍', title: 'Semantic Search', description: 'Find verses by feeling or theme, not just keywords.' },
-  { icon: '🙏', title: 'Prayer Generator', description: 'Turn any passage into a personal prayer.' },
+  {
+    href: '/plans',
+    accent: '#f59e0b',
+    gradientFrom: 'rgba(28,18,0,0.9)',
+    border: '#78350f',
+    icon: '🗓',
+    label: 'PLAN',
+    title: 'Reading Plans',
+    description: 'Personalized reading plans built around your goals, schedule, and pace.',
+    cta: 'Build a plan',
+  },
+  {
+    href: '/devotional',
+    accent: '#fb7185',
+    gradientFrom: 'rgba(26,0,16,0.9)',
+    border: '#9f1239',
+    icon: '✉',
+    label: 'REFLECT',
+    title: 'Daily Devotional',
+    description: 'A fresh AI-written devotional — passage, reflection, and closing prayer.',
+    cta: 'Read today\'s',
+  },
+  {
+    href: '/search',
+    accent: '#22d3ee',
+    gradientFrom: 'rgba(0,28,32,0.9)',
+    border: '#164e63',
+    icon: '🔍',
+    label: 'DISCOVER',
+    title: 'Semantic Search',
+    description: 'Find verses by feeling or theme — not just keywords. Describe what you need.',
+    cta: 'Start searching',
+  },
+  {
+    href: '/prayer',
+    accent: '#c084fc',
+    gradientFrom: 'rgba(19,0,32,0.9)',
+    border: '#6b21a8',
+    icon: '🙏',
+    label: 'PRAY',
+    title: 'Prayer Generator',
+    description: 'Turn any passage or situation into a sincere, personal prayer.',
+    cta: 'Write a prayer',
+  },
 ]
 
 export default function Home() {
   return (
-    <div style={{ maxWidth: '680px', margin: '0 auto', padding: '5rem 1.5rem 6rem' }}>
+    <div style={{ maxWidth: '720px', margin: '0 auto', padding: '5rem 1.5rem 6rem' }}>
 
       {/* Hero */}
       <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
@@ -66,8 +103,8 @@ export default function Home() {
         </p>
       </div>
 
-      {/* Feature cards */}
-      <div className="grid-2" style={{ gap: '16px', marginBottom: '3.5rem' }}>
+      {/* Feature cards — 2×3 grid */}
+      <div className="grid-2" style={{ gap: '14px' }}>
         {FEATURES.map(f => (
           <Link key={f.href} href={f.href} style={{ display: 'block' }}>
             <div
@@ -75,37 +112,31 @@ export default function Home() {
                 background: `radial-gradient(ellipse at top left, ${f.gradientFrom} 0%, #0c0c0c 65%)`,
                 border: '1px solid #1e1e1e',
                 borderRadius: '20px',
-                padding: '2rem 1.75rem',
+                padding: '1.75rem',
                 height: '100%',
                 cursor: 'pointer',
                 transition: 'border-color 0.2s ease, box-shadow 0.2s ease',
               }}
               onMouseEnter={e => {
                 e.currentTarget.style.borderColor = f.border
-                e.currentTarget.style.boxShadow = `0 0 0 1px ${f.border}55, 0 12px 40px ${f.accent}12`
+                e.currentTarget.style.boxShadow = `0 0 0 1px ${f.border}55, 0 12px 40px ${f.accent}10`
               }}
               onMouseLeave={e => {
                 e.currentTarget.style.borderColor = '#1e1e1e'
                 e.currentTarget.style.boxShadow = 'none'
               }}
             >
-              <div style={{
-                fontSize: '10px',
-                letterSpacing: '0.18em',
-                color: f.accent,
-                marginBottom: '1.25rem',
-                opacity: 0.65,
-              }}>
+              <div style={{ fontSize: '10px', letterSpacing: '0.18em', color: f.accent, marginBottom: '1rem', opacity: 0.65 }}>
                 {f.label}
               </div>
-              <div style={{ fontSize: '1.75rem', marginBottom: '1rem' }}>{f.icon}</div>
-              <h2 style={{ fontSize: '1.1rem', fontWeight: '500', marginBottom: '0.6rem', color: '#ebebeb' }}>
+              <div style={{ fontSize: '1.5rem', marginBottom: '0.85rem' }}>{f.icon}</div>
+              <h2 style={{ fontSize: '1.05rem', fontWeight: '500', marginBottom: '0.5rem', color: '#ebebeb' }}>
                 {f.title}
               </h2>
-              <p style={{ fontSize: '13px', color: '#666', lineHeight: '1.7', marginBottom: '1.5rem' }}>
+              <p style={{ fontSize: '13px', color: '#666', lineHeight: '1.68', marginBottom: '1.25rem' }}>
                 {f.description}
               </p>
-              <span style={{ fontSize: '13px', color: f.accent }}>
+              <span style={{ fontSize: '12px', color: f.accent }}>
                 {f.cta} →
               </span>
             </div>
@@ -113,36 +144,8 @@ export default function Home() {
         ))}
       </div>
 
-      {/* Coming soon */}
-      <div style={{ marginBottom: '5rem' }}>
-        <p style={{ fontSize: '10px', letterSpacing: '0.18em', color: '#3a3a3a', marginBottom: '1rem' }}>
-          COMING SOON
-        </p>
-        <div className="grid-2" style={{ gap: '8px' }}>
-          {COMING_SOON.map(f => (
-            <div
-              key={f.title}
-              style={{
-                background: '#0c0c0c',
-                border: '1px solid #161616',
-                borderRadius: '14px',
-                padding: '1rem 1.25rem',
-                opacity: 0.5,
-              }}
-            >
-              <p style={{ fontSize: '13px', fontWeight: '500', color: '#bbb', marginBottom: '3px' }}>
-                {f.icon} {f.title}
-              </p>
-              <p style={{ fontSize: '12px', color: '#555', lineHeight: '1.6' }}>
-                {f.description}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
-
       {/* Footer */}
-      <div style={{ textAlign: 'center', paddingTop: '2rem', borderTop: '1px solid #141414' }}>
+      <div style={{ textAlign: 'center', marginTop: '5rem', paddingTop: '2rem', borderTop: '1px solid #141414' }}>
         <p style={{ fontSize: '12px', color: '#3a3a3a' }}>
           Built with care ·{' '}
           <a href="mailto:hello@selah.ai" style={{ color: '#484848' }}>Contact</a>
