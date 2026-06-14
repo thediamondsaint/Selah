@@ -39,6 +39,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </Link>
           <nav style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
             {[
+              { href: '/interlinear', label: 'Interlinear' },
               { href: '/tutor', label: 'Tutor' },
               { href: '/plain', label: 'Plain' },
               { href: '/plans', label: 'Plans' },

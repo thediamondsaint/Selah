@@ -44,7 +44,7 @@ const FEATURES = [
     label: 'REFLECT',
     title: 'Daily Devotional',
     description: 'A fresh AI-written devotional — passage, reflection, and closing prayer.',
-    cta: 'Read today\'s',
+    cta: "Read today's",
   },
   {
     href: '/search',
@@ -69,6 +69,44 @@ const FEATURES = [
     cta: 'Write a prayer',
   },
 ]
+
+function FeatureCard({ f }: { f: typeof FEATURES[number] }) {
+  return (
+    <Link href={f.href} style={{ display: 'block' }}>
+      <div
+        style={{
+          background: `radial-gradient(ellipse at top left, ${f.gradientFrom} 0%, #0c0c0c 65%)`,
+          border: '1px solid #1e1e1e',
+          borderRadius: '20px',
+          padding: '1.75rem',
+          height: '100%',
+          cursor: 'pointer',
+          transition: 'border-color 0.2s ease, box-shadow 0.2s ease',
+        }}
+        onMouseEnter={e => {
+          e.currentTarget.style.borderColor = f.border
+          e.currentTarget.style.boxShadow = `0 0 0 1px ${f.border}55, 0 12px 40px ${f.accent}10`
+        }}
+        onMouseLeave={e => {
+          e.currentTarget.style.borderColor = '#1e1e1e'
+          e.currentTarget.style.boxShadow = 'none'
+        }}
+      >
+        <div style={{ fontSize: '10px', letterSpacing: '0.18em', color: f.accent, marginBottom: '1rem', opacity: 0.65 }}>
+          {f.label}
+        </div>
+        <div style={{ fontSize: '1.5rem', marginBottom: '0.85rem' }}>{f.icon}</div>
+        <h2 style={{ fontSize: '1.05rem', fontWeight: '500', marginBottom: '0.5rem', color: '#ebebeb' }}>
+          {f.title}
+        </h2>
+        <p style={{ fontSize: '13px', color: '#666', lineHeight: '1.68', marginBottom: '1.25rem' }}>
+          {f.description}
+        </p>
+        <span style={{ fontSize: '12px', color: f.accent }}>{f.cta} →</span>
+      </div>
+    </Link>
+  )
+}
 
 export default function Home() {
   return (
@@ -103,45 +141,68 @@ export default function Home() {
         </p>
       </div>
 
-      {/* Feature cards — 2×3 grid */}
-      <div className="grid-2" style={{ gap: '14px' }}>
-        {FEATURES.map(f => (
-          <Link key={f.href} href={f.href} style={{ display: 'block' }}>
-            <div
-              style={{
-                background: `radial-gradient(ellipse at top left, ${f.gradientFrom} 0%, #0c0c0c 65%)`,
-                border: '1px solid #1e1e1e',
-                borderRadius: '20px',
-                padding: '1.75rem',
-                height: '100%',
-                cursor: 'pointer',
-                transition: 'border-color 0.2s ease, box-shadow 0.2s ease',
-              }}
-              onMouseEnter={e => {
-                e.currentTarget.style.borderColor = f.border
-                e.currentTarget.style.boxShadow = `0 0 0 1px ${f.border}55, 0 12px 40px ${f.accent}10`
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.borderColor = '#1e1e1e'
-                e.currentTarget.style.boxShadow = 'none'
-              }}
-            >
-              <div style={{ fontSize: '10px', letterSpacing: '0.18em', color: f.accent, marginBottom: '1rem', opacity: 0.65 }}>
-                {f.label}
-              </div>
-              <div style={{ fontSize: '1.5rem', marginBottom: '0.85rem' }}>{f.icon}</div>
-              <h2 style={{ fontSize: '1.05rem', fontWeight: '500', marginBottom: '0.5rem', color: '#ebebeb' }}>
-                {f.title}
-              </h2>
-              <p style={{ fontSize: '13px', color: '#666', lineHeight: '1.68', marginBottom: '1.25rem' }}>
-                {f.description}
-              </p>
-              <span style={{ fontSize: '12px', color: f.accent }}>
-                {f.cta} →
-              </span>
+      {/* Interlinear — featured full-width card */}
+      <Link href="/interlinear" style={{ display: 'block', marginBottom: '14px' }}>
+        <div
+          style={{
+            background: 'radial-gradient(ellipse at top left, rgba(26,10,0,0.95) 0%, #0c0c0c 60%)',
+            border: '1px solid #1e1e1e',
+            borderRadius: '20px',
+            padding: '2rem',
+            cursor: 'pointer',
+            transition: 'border-color 0.2s ease, box-shadow 0.2s ease',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '2rem',
+          }}
+          onMouseEnter={e => {
+            e.currentTarget.style.borderColor = '#9a3412'
+            e.currentTarget.style.boxShadow = '0 0 0 1px #9a341255, 0 12px 40px #f9731610'
+          }}
+          onMouseLeave={e => {
+            e.currentTarget.style.borderColor = '#1e1e1e'
+            e.currentTarget.style.boxShadow = 'none'
+          }}
+        >
+          {/* Script display */}
+          <div style={{
+            flexShrink: 0,
+            width: '72px',
+            height: '72px',
+            borderRadius: '16px',
+            background: 'rgba(249,115,22,0.07)',
+            border: '1px solid #9a341230',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '2px',
+          }}>
+            <span style={{ fontSize: '18px', color: '#f97316', opacity: 0.9, fontFamily: 'Georgia, serif', lineHeight: 1 }}>Αα</span>
+            <span style={{ fontSize: '14px', color: '#f97316', opacity: 0.7, fontFamily: 'Georgia, serif', lineHeight: 1 }}>אב</span>
+          </div>
+
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div style={{ fontSize: '10px', letterSpacing: '0.18em', color: '#f97316', marginBottom: '0.5rem', opacity: 0.65 }}>
+              SCHOLARLY
             </div>
-          </Link>
-        ))}
+            <h2 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#ebebeb', marginBottom: '0.4rem' }}>
+              Interlinear — Greek & Hebrew
+            </h2>
+            <p style={{ fontSize: '13px', color: '#666', lineHeight: '1.65' }}>
+              Word-by-word original language study with transliteration, Strong's numbers, and grammatical parsing for any verse in the Bible.
+            </p>
+          </div>
+
+          <span style={{ fontSize: '13px', color: '#f97316', flexShrink: 0, paddingRight: '0.25rem' }}>
+            Explore →
+          </span>
+        </div>
+      </Link>
+
+      {/* 2×3 feature grid */}
+      <div className="grid-2" style={{ gap: '14px' }}>
+        {FEATURES.map(f => <FeatureCard key={f.href} f={f} />)}
       </div>
 
       {/* Footer */}
