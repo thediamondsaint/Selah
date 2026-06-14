@@ -5,11 +5,17 @@ import { usePathname } from 'next/navigation'
 import { useState, useRef, useEffect } from 'react'
 import { Logo } from './Logo'
 import { FEATURES, CATEGORIES } from '../features'
+import { useProfile } from '../profile/ProfileContext'
+import { firstName } from '../profile/profile'
 
 export function Header() {
   const pathname = usePathname()
+  const { profile, loaded } = useProfile()
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
+
+  const fname = firstName(profile)
+  const onProfile = pathname === '/profile'
 
   // Close on route change
   useEffect(() => { setOpen(false) }, [pathname])
@@ -59,6 +65,48 @@ export function Header() {
         }}>
           Selah
         </span>
+      </Link>
+
+      {/* Right side: profile chip + features menu */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+
+      {/* Profile chip */}
+      <Link
+        href="/profile"
+        aria-label="Your profile"
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '7px',
+          padding: fname ? '5px 12px 5px 5px' : '7px 12px',
+          borderRadius: '999px',
+          border: `1px solid ${onProfile ? '#312e81' : '#1e1e1e'}`,
+          background: onProfile ? '#1e1b4b' : '#0e0e0e',
+          transition: 'all 0.15s',
+        }}
+      >
+        <span style={{
+          width: '22px',
+          height: '22px',
+          borderRadius: '999px',
+          background: fname ? 'linear-gradient(140deg, #a5b4fc, #6366f1)' : '#1a1a1a',
+          border: fname ? 'none' : '1px solid #2a2a2a',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontSize: fname ? '11px' : '12px',
+          fontWeight: '600',
+          color: fname ? '#0b0b14' : '#666',
+          flexShrink: 0,
+        }}>
+          {/* Render initial only once hydrated to avoid mismatch */}
+          {loaded && fname ? fname[0].toUpperCase() : '👤'}
+        </span>
+        {loaded && fname && (
+          <span style={{ fontSize: '13px', color: onProfile ? '#c7d2fe' : '#bbb', fontWeight: '500' }}>
+            {fname}
+          </span>
+        )}
       </Link>
 
       {/* Features menu */}
@@ -184,6 +232,8 @@ export function Header() {
             ))}
           </div>
         )}
+      </div>
+
       </div>
     </header>
   )

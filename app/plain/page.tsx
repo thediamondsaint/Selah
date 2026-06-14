@@ -1,6 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import { useProfile } from '../profile/ProfileContext'
+import { buildPersona } from '../profile/profile'
 
 const PRESETS = ['John 3:16', 'Psalm 23', 'Romans 8:28', 'Hebrews 11:1', 'Isaiah 40:31', 'Proverbs 3:5-6']
 
@@ -19,8 +21,18 @@ const LEVEL_PROMPTS: Record<string, string> = {
 }
 
 export default function PlainPage() {
+  const { profile } = useProfile()
   const [ref, setRef] = useState('')
   const [level, setLevel] = useState('teen')
+  const appliedDefault = useRef(false)
+
+  // Default the reading level from the user's profile, once, on load.
+  useEffect(() => {
+    if (!appliedDefault.current && profile.readingLevel) {
+      setLevel(profile.readingLevel)
+      appliedDefault.current = true
+    }
+  }, [profile.readingLevel])
   const [displayRef, setDisplayRef] = useState('')
   const [original, setOriginal] = useState('')
   const [plain, setPlain] = useState('')
@@ -40,7 +52,7 @@ export default function PlainPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          system: 'You are a Bible scholar. Always respond with valid JSON only — no markdown, no extra text.',
+          system: `You are a Bible scholar. Always respond with valid JSON only — no markdown, no extra text.${buildPersona(profile)}`,
           messages: [{
             role: 'user',
             content: `For the Bible passage "${verseRef}", respond with this exact JSON shape:

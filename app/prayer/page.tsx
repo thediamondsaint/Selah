@@ -1,6 +1,8 @@
 'use client'
 
 import { useState } from 'react'
+import { useProfile } from '../profile/ProfileContext'
+import { buildPersona } from '../profile/profile'
 
 const TYPES = [
   { id: 'personal', label: 'Personal', desc: 'For your own heart and needs' },
@@ -18,6 +20,7 @@ const ACCENT_BG = '#130020'
 const ACCENT_BORDER = '#6b21a8'
 
 export default function PrayerPage() {
+  const { profile } = useProfile()
   const [input, setInput] = useState('')
   const [type, setType] = useState('personal')
   const [prayer, setPrayer] = useState('')
@@ -39,7 +42,7 @@ export default function PrayerPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          system: 'You are a prayer writer who crafts sincere, heartfelt, scripturally-grounded prayers. Write in first person, speaking directly to God. Do not begin with "Dear God" or "Heavenly Father" — open with something more intimate and specific. Avoid clichés.',
+          system: `You are a prayer writer who crafts sincere, heartfelt, scripturally-grounded prayers. Write in first person, speaking directly to God. Do not begin with "Dear God" or "Heavenly Father" — open with something more intimate and specific. Avoid clichés.${buildPersona(profile)}`,
           messages: [{
             role: 'user',
             content: `Write a ${type} prayer (${typeDesc}) based on: "${input}"

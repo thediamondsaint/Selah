@@ -1,6 +1,8 @@
 'use client'
 
 import { useState } from 'react'
+import { useProfile } from '../profile/ProfileContext'
+import { buildPersona } from '../profile/profile'
 
 const PRESETS = ['John 1:1-14', 'Psalm 23', 'Romans 8:28-39', 'Genesis 1:1-5', 'Matthew 5:1-12', 'Philippians 2:5-11']
 
@@ -22,6 +24,7 @@ const ACCENT_BG = '#1a1400'
 const ACCENT_BORDER = '#854d0e'
 
 export default function CommentaryPage() {
+  const { profile } = useProfile()
   const [ref, setRef] = useState('')
   const [result, setResult] = useState<Commentary | null>(null)
   const [loading, setLoading] = useState(false)
@@ -38,7 +41,7 @@ export default function CommentaryPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          system: 'You are a seminary-trained biblical scholar writing accessible, non-denominational commentary grounded in sound exegesis, historical context, and the original languages. Respond with valid JSON only — no markdown, no extra text.',
+          system: `You are a seminary-trained biblical scholar writing accessible, non-denominational commentary grounded in sound exegesis, historical context, and the original languages. Respond with valid JSON only — no markdown, no extra text.${buildPersona(profile)}`,
           messages: [{
             role: 'user',
             content: `Write a scholarly commentary on: "${passage}"

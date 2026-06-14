@@ -1,6 +1,8 @@
 'use client'
 
 import { useState } from 'react'
+import { useProfile } from '../profile/ProfileContext'
+import { buildPersona } from '../profile/profile'
 
 const SUGGESTIONS = [
   'feeling anxious and afraid',
@@ -20,6 +22,7 @@ const ACCENT_BG = '#001c20'
 const ACCENT_BORDER = '#164e63'
 
 export default function SearchPage() {
+  const { profile } = useProfile()
   const [query, setQuery] = useState('')
   const [results, setResults] = useState<Verse[]>([])
   const [loading, setLoading] = useState(false)
@@ -39,7 +42,7 @@ export default function SearchPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          system: 'You are a Bible scholar with encyclopedic knowledge of scripture. Respond with valid JSON only — no markdown, no extra text.',
+          system: `You are a Bible scholar with encyclopedic knowledge of scripture. Respond with valid JSON only — no markdown, no extra text.${buildPersona(profile)}`,
           messages: [{
             role: 'user',
             content: `Find 6 Bible verses most relevant to: "${text}"

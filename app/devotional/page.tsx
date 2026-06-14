@@ -1,6 +1,8 @@
 'use client'
 
 import { useState } from 'react'
+import { useProfile } from '../profile/ProfileContext'
+import { buildPersona } from '../profile/profile'
 
 const THEMES = ['Hope', 'Strength', 'Peace', 'Gratitude', 'Wisdom', 'Love', 'Forgiveness', 'Faith']
 
@@ -17,6 +19,7 @@ const ACCENT_BG = '#1a0010'
 const ACCENT_BORDER = '#9f1239'
 
 export default function DevotionalPage() {
+  const { profile } = useProfile()
   const [theme, setTheme] = useState('')
   const [devotional, setDevotional] = useState<Devotional | null>(null)
   const [loading, setLoading] = useState(false)
@@ -36,7 +39,7 @@ export default function DevotionalPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          system: 'You are a thoughtful, non-denominational devotional writer with deep knowledge of scripture. Respond with valid JSON only — no markdown, no extra text.',
+          system: `You are a thoughtful, non-denominational devotional writer with deep knowledge of scripture. Respond with valid JSON only — no markdown, no extra text.${buildPersona(profile)}`,
           messages: [{
             role: 'user',
             content: `Write a daily devotional${theme ? ` on the theme of "${theme}"` : ''} for today (${today}).

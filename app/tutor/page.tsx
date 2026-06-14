@@ -1,6 +1,8 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
+import { useProfile } from '../profile/ProfileContext'
+import { buildPersona } from '../profile/profile'
 
 const MODES = [
   { id: 'general', label: 'General' },
@@ -33,6 +35,7 @@ const WELCOME: Message = {
 }
 
 export default function TutorPage() {
+  const { profile } = useProfile()
   const [messages, setMessages] = useState<Message[]>([WELCOME])
   const [input, setInput] = useState('')
   const [mode, setMode] = useState('general')
@@ -66,7 +69,7 @@ export default function TutorPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          system: `You are an AI Bible Tutor — knowledgeable, warm, non-denominational, and accessible. ${MODE_PROMPTS[mode]} Keep answers to 3–5 sentences unless more depth is clearly needed. Reference related scriptures briefly when helpful. Never be preachy.`,
+          system: `You are an AI Bible Tutor — knowledgeable, warm, non-denominational, and accessible. ${MODE_PROMPTS[mode]} Keep answers to 3–5 sentences unless more depth is clearly needed. Reference related scriptures briefly when helpful. Never be preachy.${buildPersona(profile)}`,
           messages: apiMessages,
           stream: true,
         }),

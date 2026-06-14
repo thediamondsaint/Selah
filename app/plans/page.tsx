@@ -1,6 +1,8 @@
 'use client'
 
 import { useState } from 'react'
+import { useProfile } from '../profile/ProfileContext'
+import { buildPersona } from '../profile/profile'
 
 const TOPIC_PRESETS = [
   'Life of Jesus', 'The Psalms', "Paul's Letters",
@@ -30,6 +32,7 @@ const ACCENT_BG = '#1c1200'
 const ACCENT_BORDER = '#78350f'
 
 export default function PlansPage() {
+  const { profile } = useProfile()
   const [topic, setTopic] = useState('')
   const [duration, setDuration] = useState('2w')
   const [pace, setPace] = useState('medium')
@@ -63,7 +66,7 @@ export default function PlansPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          system: 'You are a Bible scholar and spiritual director. Respond with valid JSON only — no markdown, no extra text.',
+          system: `You are a Bible scholar and spiritual director. Respond with valid JSON only — no markdown, no extra text.${buildPersona(profile)}`,
           messages: [{
             role: 'user',
             content: `Create a personalized Bible reading plan.
