@@ -68,6 +68,17 @@ const FEATURES = [
     description: 'Turn any passage or situation into a sincere, personal prayer.',
     cta: 'Write a prayer',
   },
+  {
+    href: '/compare',
+    accent: '#38bdf8',
+    gradientFrom: 'rgba(0,24,38,0.9)',
+    border: '#075985',
+    icon: '⇄',
+    label: 'COMPARE',
+    title: 'Verse Comparison',
+    description: 'See any verse across 9 major translations — KJV, ESV, NIV, NLT, MSG, and more.',
+    cta: 'Compare translations',
+  },
 ]
 
 function FeatureCard({ f }: { f: typeof FEATURES[number] }) {

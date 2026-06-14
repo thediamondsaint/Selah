@@ -46,6 +46,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               { href: '/devotional', label: 'Devotional' },
               { href: '/search', label: 'Search' },
               { href: '/prayer', label: 'Prayer' },
+              { href: '/compare', label: 'Compare' },
             ].map(({ href, label }) => (
               <Link
                 key={href}
