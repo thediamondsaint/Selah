@@ -1,0 +1,148 @@
+export type Feature = {
+  href: string
+  icon: string
+  label: string
+  title: string
+  short: string
+  description: string
+  cta: string
+  accent: string
+  gradientFrom: string
+  border: string
+  category: 'Study' | 'Read' | 'Reflect'
+}
+
+export const FEATURES: Feature[] = [
+  {
+    href: '/tutor',
+    icon: '📖',
+    label: 'STUDY',
+    title: 'Bible Tutor',
+    short: 'Ask anything about scripture',
+    description: 'Ask anything about scripture — history, meaning, theology, or how it applies to your life today.',
+    cta: 'Start studying',
+    accent: '#818cf8',
+    gradientFrom: 'rgba(30,27,75,0.9)',
+    border: '#312e81',
+    category: 'Study',
+  },
+  {
+    href: '/interlinear',
+    icon: 'אΑ',
+    label: 'SCHOLARLY',
+    title: 'Interlinear',
+    short: 'Greek & Hebrew word-by-word',
+    description: "Word-by-word original language study with transliteration, Strong's numbers, and grammatical parsing.",
+    cta: 'Explore',
+    accent: '#f97316',
+    gradientFrom: 'rgba(26,10,0,0.95)',
+    border: '#9a3412',
+    category: 'Study',
+  },
+  {
+    href: '/word-study',
+    icon: '🔑',
+    label: 'LEXICON',
+    title: 'Word Study',
+    short: 'Trace a word through scripture',
+    description: 'Deep-dive any Greek or Hebrew word — definition, semantic range, and key occurrences across the Bible.',
+    cta: 'Study a word',
+    accent: '#2dd4bf',
+    gradientFrom: 'rgba(0,28,26,0.9)',
+    border: '#115e59',
+    category: 'Study',
+  },
+  {
+    href: '/commentary',
+    icon: '📜',
+    label: 'INSIGHT',
+    title: 'Commentary',
+    short: 'Verse-by-verse exposition',
+    description: 'A scholarly commentary on any passage — context, structure, key terms, and interpretation.',
+    cta: 'Read commentary',
+    accent: '#eab308',
+    gradientFrom: 'rgba(26,20,0,0.9)',
+    border: '#854d0e',
+    category: 'Study',
+  },
+  {
+    href: '/compare',
+    icon: '⇄',
+    label: 'COMPARE',
+    title: 'Verse Comparison',
+    short: 'One verse, 9 translations',
+    description: 'See any verse across 9 major translations — KJV, ESV, NIV, NLT, MSG, and more.',
+    cta: 'Compare translations',
+    accent: '#38bdf8',
+    gradientFrom: 'rgba(0,24,38,0.9)',
+    border: '#075985',
+    category: 'Study',
+  },
+  {
+    href: '/plain',
+    icon: '✦',
+    label: 'TRANSLATE',
+    title: 'Plain Language',
+    short: 'Any verse in clear modern English',
+    description: 'Any verse rewritten in clear modern English — for any reading level, from age 8 to adult.',
+    cta: 'Try it',
+    accent: '#4ade80',
+    gradientFrom: 'rgba(5,46,22,0.9)',
+    border: '#14532d',
+    category: 'Read',
+  },
+  {
+    href: '/plans',
+    icon: '🗓',
+    label: 'PLAN',
+    title: 'Reading Plans',
+    short: 'A plan built around your goals',
+    description: 'Personalized reading plans built around your goals, schedule, and pace.',
+    cta: 'Build a plan',
+    accent: '#f59e0b',
+    gradientFrom: 'rgba(28,18,0,0.9)',
+    border: '#78350f',
+    category: 'Read',
+  },
+  {
+    href: '/devotional',
+    icon: '✉',
+    label: 'REFLECT',
+    title: 'Daily Devotional',
+    short: 'A fresh devotional each day',
+    description: 'A fresh AI-written devotional — passage, reflection, and closing prayer.',
+    cta: "Read today's",
+    accent: '#fb7185',
+    gradientFrom: 'rgba(26,0,16,0.9)',
+    border: '#9f1239',
+    category: 'Read',
+  },
+  {
+    href: '/search',
+    icon: '🔍',
+    label: 'DISCOVER',
+    title: 'Semantic Search',
+    short: 'Find verses by feeling or theme',
+    description: 'Find verses by feeling or theme — not just keywords. Describe what you need.',
+    cta: 'Start searching',
+    accent: '#22d3ee',
+    gradientFrom: 'rgba(0,28,32,0.9)',
+    border: '#164e63',
+    category: 'Reflect',
+  },
+  {
+    href: '/prayer',
+    icon: '🙏',
+    label: 'PRAY',
+    title: 'Prayer Generator',
+    short: 'Turn a passage into a prayer',
+    description: 'Turn any passage or situation into a sincere, personal prayer.',
+    cta: 'Write a prayer',
+    accent: '#c084fc',
+    gradientFrom: 'rgba(19,0,32,0.9)',
+    border: '#6b21a8',
+    category: 'Reflect',
+  },
+]
+
+export const CATEGORIES: Array<Feature['category']> = ['Study', 'Read', 'Reflect']

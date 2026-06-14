@@ -1,116 +1,56 @@
 'use client'
 import Link from 'next/link'
+import { Logo } from './components/Logo'
+import { FEATURES, CATEGORIES, type Feature } from './features'
 
-const FEATURES = [
-  {
-    href: '/tutor',
-    accent: '#818cf8',
-    gradientFrom: 'rgba(30,27,75,0.9)',
-    border: '#312e81',
-    icon: '📖',
-    label: 'STUDY',
-    title: 'Bible Tutor',
-    description: 'Ask anything about scripture — history, meaning, theology, or how it applies to your life today.',
-    cta: 'Start studying',
-  },
-  {
-    href: '/plain',
-    accent: '#4ade80',
-    gradientFrom: 'rgba(5,46,22,0.9)',
-    border: '#14532d',
-    icon: '✦',
-    label: 'TRANSLATE',
-    title: 'Plain Language',
-    description: 'Any verse rewritten in clear modern English — for any reading level, from age 8 to adult.',
-    cta: 'Try it',
-  },
-  {
-    href: '/plans',
-    accent: '#f59e0b',
-    gradientFrom: 'rgba(28,18,0,0.9)',
-    border: '#78350f',
-    icon: '🗓',
-    label: 'PLAN',
-    title: 'Reading Plans',
-    description: 'Personalized reading plans built around your goals, schedule, and pace.',
-    cta: 'Build a plan',
-  },
-  {
-    href: '/devotional',
-    accent: '#fb7185',
-    gradientFrom: 'rgba(26,0,16,0.9)',
-    border: '#9f1239',
-    icon: '✉',
-    label: 'REFLECT',
-    title: 'Daily Devotional',
-    description: 'A fresh AI-written devotional — passage, reflection, and closing prayer.',
-    cta: "Read today's",
-  },
-  {
-    href: '/search',
-    accent: '#22d3ee',
-    gradientFrom: 'rgba(0,28,32,0.9)',
-    border: '#164e63',
-    icon: '🔍',
-    label: 'DISCOVER',
-    title: 'Semantic Search',
-    description: 'Find verses by feeling or theme — not just keywords. Describe what you need.',
-    cta: 'Start searching',
-  },
-  {
-    href: '/prayer',
-    accent: '#c084fc',
-    gradientFrom: 'rgba(19,0,32,0.9)',
-    border: '#6b21a8',
-    icon: '🙏',
-    label: 'PRAY',
-    title: 'Prayer Generator',
-    description: 'Turn any passage or situation into a sincere, personal prayer.',
-    cta: 'Write a prayer',
-  },
-  {
-    href: '/compare',
-    accent: '#38bdf8',
-    gradientFrom: 'rgba(0,24,38,0.9)',
-    border: '#075985',
-    icon: '⇄',
-    label: 'COMPARE',
-    title: 'Verse Comparison',
-    description: 'See any verse across 9 major translations — KJV, ESV, NIV, NLT, MSG, and more.',
-    cta: 'Compare translations',
-  },
-]
+const CATEGORY_BLURB: Record<Feature['category'], string> = {
+  Study: 'Go deep into the text — languages, translations, and exposition.',
+  Read: 'Meet scripture where you are, at your own pace.',
+  Reflect: 'Carry the word into prayer and everyday life.',
+}
 
-function FeatureCard({ f }: { f: typeof FEATURES[number] }) {
+function FeatureCard({ f }: { f: Feature }) {
   return (
     <Link href={f.href} style={{ display: 'block' }}>
       <div
         style={{
           background: `radial-gradient(ellipse at top left, ${f.gradientFrom} 0%, #0c0c0c 65%)`,
           border: '1px solid #1e1e1e',
-          borderRadius: '20px',
-          padding: '1.75rem',
+          borderRadius: '18px',
+          padding: '1.5rem',
           height: '100%',
           cursor: 'pointer',
-          transition: 'border-color 0.2s ease, box-shadow 0.2s ease',
+          transition: 'border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease',
         }}
         onMouseEnter={e => {
           e.currentTarget.style.borderColor = f.border
-          e.currentTarget.style.boxShadow = `0 0 0 1px ${f.border}55, 0 12px 40px ${f.accent}10`
+          e.currentTarget.style.boxShadow = `0 0 0 1px ${f.border}55, 0 14px 44px ${f.accent}12`
+          e.currentTarget.style.transform = 'translateY(-2px)'
         }}
         onMouseLeave={e => {
           e.currentTarget.style.borderColor = '#1e1e1e'
           e.currentTarget.style.boxShadow = 'none'
+          e.currentTarget.style.transform = 'none'
         }}
       >
-        <div style={{ fontSize: '10px', letterSpacing: '0.18em', color: f.accent, marginBottom: '1rem', opacity: 0.65 }}>
-          {f.label}
+        <div style={{
+          width: '38px',
+          height: '38px',
+          borderRadius: '10px',
+          background: f.gradientFrom,
+          border: `1px solid ${f.border}`,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontSize: '17px',
+          marginBottom: '1rem',
+        }}>
+          {f.icon}
         </div>
-        <div style={{ fontSize: '1.5rem', marginBottom: '0.85rem' }}>{f.icon}</div>
-        <h2 style={{ fontSize: '1.05rem', fontWeight: '500', marginBottom: '0.5rem', color: '#ebebeb' }}>
+        <h3 style={{ fontSize: '1.02rem', fontWeight: '500', marginBottom: '0.45rem', color: '#ebebeb' }}>
           {f.title}
-        </h2>
-        <p style={{ fontSize: '13px', color: '#666', lineHeight: '1.68', marginBottom: '1.25rem' }}>
+        </h3>
+        <p style={{ fontSize: '13px', color: '#666', lineHeight: '1.65', marginBottom: '1.1rem' }}>
           {f.description}
         </p>
         <span style={{ fontSize: '12px', color: f.accent }}>{f.cta} →</span>
@@ -121,103 +61,79 @@ function FeatureCard({ f }: { f: typeof FEATURES[number] }) {
 
 export default function Home() {
   return (
-    <div style={{ maxWidth: '720px', margin: '0 auto', padding: '5rem 1.5rem 6rem' }}>
+    <div style={{ maxWidth: '760px', margin: '0 auto', padding: '4.5rem 1.5rem 6rem' }}>
 
       {/* Hero */}
-      <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+      <div style={{ textAlign: 'center', marginBottom: '4.5rem' }}>
         <div style={{
-          display: 'inline-block',
-          fontSize: '10px',
-          letterSpacing: '0.22em',
-          color: '#444',
-          marginBottom: '2rem',
-          padding: '4px 14px',
-          border: '1px solid #1e1e1e',
-          borderRadius: '999px',
+          display: 'inline-flex',
+          marginBottom: '1.75rem',
+          filter: 'drop-shadow(0 6px 22px rgba(129,140,248,0.28))',
         }}>
-          SELAH
+          <Logo size={52} />
         </div>
         <h1 style={{
-          fontSize: 'clamp(2rem, 5vw, 3.25rem)',
+          fontSize: 'clamp(2.1rem, 5.5vw, 3.4rem)',
           fontWeight: '600',
-          lineHeight: '1.15',
+          lineHeight: '1.12',
           marginBottom: '1.25rem',
-          color: '#f0f0f0',
-          letterSpacing: '-0.025em',
+          color: '#f5f5f5',
+          letterSpacing: '-0.03em',
         }}>
           Understand the Bible<br />like never before
         </h1>
-        <p style={{ color: '#666', fontSize: '1rem', maxWidth: '400px', margin: '0 auto', lineHeight: '1.75' }}>
-          AI-powered tools for deeper scripture study — plain language, guided learning, and daily devotion.
+        <p style={{ color: '#777', fontSize: '1.05rem', maxWidth: '440px', margin: '0 auto', lineHeight: '1.75' }}>
+          A complete suite of AI-powered tools for deeper scripture study — from the original languages to your daily devotion.
         </p>
+        <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', marginTop: '2rem', flexWrap: 'wrap' }}>
+          <Link href="/tutor" style={{
+            padding: '10px 22px',
+            borderRadius: '10px',
+            background: '#818cf8',
+            color: '#09090f',
+            fontWeight: '600',
+            fontSize: '14px',
+          }}>
+            Start studying
+          </Link>
+          <Link href="/interlinear" style={{
+            padding: '10px 22px',
+            borderRadius: '10px',
+            background: '#111',
+            border: '1px solid #252525',
+            color: '#ccc',
+            fontWeight: '500',
+            fontSize: '14px',
+          }}>
+            Explore the languages
+          </Link>
+        </div>
       </div>
 
-      {/* Interlinear — featured full-width card */}
-      <Link href="/interlinear" style={{ display: 'block', marginBottom: '14px' }}>
-        <div
-          style={{
-            background: 'radial-gradient(ellipse at top left, rgba(26,10,0,0.95) 0%, #0c0c0c 60%)',
-            border: '1px solid #1e1e1e',
-            borderRadius: '20px',
-            padding: '2rem',
-            cursor: 'pointer',
-            transition: 'border-color 0.2s ease, box-shadow 0.2s ease',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '2rem',
-          }}
-          onMouseEnter={e => {
-            e.currentTarget.style.borderColor = '#9a3412'
-            e.currentTarget.style.boxShadow = '0 0 0 1px #9a341255, 0 12px 40px #f9731610'
-          }}
-          onMouseLeave={e => {
-            e.currentTarget.style.borderColor = '#1e1e1e'
-            e.currentTarget.style.boxShadow = 'none'
-          }}
-        >
-          {/* Script display */}
-          <div style={{
-            flexShrink: 0,
-            width: '72px',
-            height: '72px',
-            borderRadius: '16px',
-            background: 'rgba(249,115,22,0.07)',
-            border: '1px solid #9a341230',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '2px',
-          }}>
-            <span style={{ fontSize: '18px', color: '#f97316', opacity: 0.9, fontFamily: 'Georgia, serif', lineHeight: 1 }}>Αα</span>
-            <span style={{ fontSize: '14px', color: '#f97316', opacity: 0.7, fontFamily: 'Georgia, serif', lineHeight: 1 }}>אב</span>
-          </div>
-
-          <div style={{ flex: 1, minWidth: 0 }}>
-            <div style={{ fontSize: '10px', letterSpacing: '0.18em', color: '#f97316', marginBottom: '0.5rem', opacity: 0.65 }}>
-              SCHOLARLY
-            </div>
-            <h2 style={{ fontSize: '1.15rem', fontWeight: '500', color: '#ebebeb', marginBottom: '0.4rem' }}>
-              Interlinear — Greek & Hebrew
+      {/* Feature sections by category */}
+      {CATEGORIES.map(cat => (
+        <section key={cat} style={{ marginBottom: '3rem' }}>
+          <div style={{ marginBottom: '1.1rem' }}>
+            <h2 style={{ fontSize: '0.95rem', fontWeight: '600', color: '#d0d0d0', letterSpacing: '0.01em' }}>
+              {cat}
             </h2>
-            <p style={{ fontSize: '13px', color: '#666', lineHeight: '1.65' }}>
-              Word-by-word original language study with transliteration, Strong's numbers, and grammatical parsing for any verse in the Bible.
+            <p style={{ fontSize: '12.5px', color: '#555', marginTop: '2px' }}>
+              {CATEGORY_BLURB[cat]}
             </p>
           </div>
-
-          <span style={{ fontSize: '13px', color: '#f97316', flexShrink: 0, paddingRight: '0.25rem' }}>
-            Explore →
-          </span>
-        </div>
-      </Link>
-
-      {/* 2×3 feature grid */}
-      <div className="grid-2" style={{ gap: '14px' }}>
-        {FEATURES.map(f => <FeatureCard key={f.href} f={f} />)}
-      </div>
+          <div className="grid-2" style={{ gap: '12px' }}>
+            {FEATURES.filter(f => f.category === cat).map(f => (
+              <FeatureCard key={f.href} f={f} />
+            ))}
+          </div>
+        </section>
+      ))}
 
       {/* Footer */}
-      <div style={{ textAlign: 'center', marginTop: '5rem', paddingTop: '2rem', borderTop: '1px solid #141414' }}>
+      <div style={{ textAlign: 'center', marginTop: '4rem', paddingTop: '2rem', borderTop: '1px solid #141414' }}>
+        <div style={{ display: 'inline-flex', marginBottom: '0.75rem', opacity: 0.5 }}>
+          <Logo size={20} />
+        </div>
         <p style={{ fontSize: '12px', color: '#3a3a3a' }}>
           Built with care ·{' '}
           <a href="mailto:hello@selah.ai" style={{ color: '#484848' }}>Contact</a>
