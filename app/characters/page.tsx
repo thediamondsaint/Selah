@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { ROSTER, CATEGORY_STYLE, CATEGORY_ORDER, type Character, type Category } from './roster'
+import BIOS from './bios.json'
 
 type KeyMoment = { event: string; ref: string }
 type KeyVerse = { ref: string; text: string }
@@ -18,6 +19,24 @@ type Bio = {
 }
 
 const FILTERS: Array<'All' | Category> = ['All', ...CATEGORY_ORDER]
+
+// Pre-generated bios shipped with the app — zero runtime cost.
+const STATIC_BIOS = BIOS as Record<string, Bio>
+
+// Read a bio without hitting the API: static file first, then any the
+// user has previously generated (cached in localStorage).
+function readCachedBio(name: string): Bio | null {
+  if (STATIC_BIOS[name]) return STATIC_BIOS[name]
+  if (typeof window !== 'undefined') {
+    try {
+      const stored = window.localStorage.getItem(`selah-bio:${name}`)
+      if (stored) return JSON.parse(stored) as Bio
+    } catch {
+      /* ignore */
+    }
+  }
+  return null
+}
 
 export default function CharactersPage() {
   const [filter, setFilter] = useState<'All' | Category>('All')
@@ -172,8 +191,9 @@ function TradingCard({ character, number, onClick }: { character: Character; num
 
 function BioModal({ character, onClose }: { character: Character; onClose: () => void }) {
   const s = CATEGORY_STYLE[character.category]
-  const [bio, setBio] = useState<Bio | null>(null)
-  const [loading, setLoading] = useState(true)
+  const cached = readCachedBio(character.name)
+  const [bio, setBio] = useState<Bio | null>(cached)
+  const [loading, setLoading] = useState(!cached)
   const [error, setError] = useState('')
 
   const load = useCallback(async () => {
@@ -212,7 +232,14 @@ Include 4-6 key moments and 2-3 key verses.`,
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error ?? `HTTP ${res.status}`)
-      setBio(JSON.parse(data.text))
+      const parsed: Bio = JSON.parse(data.text)
+      setBio(parsed)
+      // Persist so this character is never generated again on this device.
+      try {
+        window.localStorage.setItem(`selah-bio:${character.name}`, JSON.stringify(parsed))
+      } catch {
+        /* storage full or unavailable — non-fatal */
+      }
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Something went wrong. Please try again.')
     } finally {
@@ -220,7 +247,11 @@ Include 4-6 key moments and 2-3 key verses.`,
     }
   }, [character])
 
-  useEffect(() => { load() }, [load])
+  // Only generate when we have no cached/static bio.
+  useEffect(() => {
+    if (!bio) load()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [load])
 
   // Lock body scroll + Escape to close
   useEffect(() => {
