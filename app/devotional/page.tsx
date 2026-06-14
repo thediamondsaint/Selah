@@ -58,9 +58,10 @@ Respond with ONLY this JSON:
       })
 
       const data = await res.json()
+      if (!res.ok) throw new Error(data.error ?? `HTTP ${res.status}`)
       setDevotional(JSON.parse(data.text))
-    } catch {
-      setError('Something went wrong. Please try again.')
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Something went wrong. Please try again.')
     } finally {
       setLoading(false)
     }

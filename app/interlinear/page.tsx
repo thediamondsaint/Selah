@@ -172,11 +172,12 @@ Respond with ONLY this JSON shape:
       })
 
       const data = await res.json()
+      if (!res.ok) throw new Error(data.error ?? `HTTP ${res.status}`)
       const parsed: InterlinearResult = JSON.parse(data.text)
       setResult(parsed)
       setRef(parsed.verse_ref)
-    } catch {
-      setError('Something went wrong. Please check the reference and try again.')
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Something went wrong. Please try again.')
     } finally {
       setLoading(false)
     }

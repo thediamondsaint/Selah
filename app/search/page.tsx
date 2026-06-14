@@ -61,10 +61,11 @@ Respond with ONLY this JSON:
       })
 
       const data = await res.json()
+      if (!res.ok) throw new Error(data.error ?? `HTTP ${res.status}`)
       const parsed = JSON.parse(data.text)
       setResults(parsed.verses)
-    } catch {
-      setError('Something went wrong. Please try again.')
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Something went wrong. Please try again.')
     } finally {
       setLoading(false)
     }

@@ -70,11 +70,12 @@ Respond with ONLY this JSON:
       })
 
       const data = await res.json()
+      if (!res.ok) throw new Error(data.error ?? `HTTP ${res.status}`)
       const parsed: Result = JSON.parse(data.text)
       setResult(parsed)
       setRef(parsed.ref)
-    } catch {
-      setError('Something went wrong. Please check the reference and try again.')
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Something went wrong. Please try again.')
     } finally {
       setLoading(false)
     }

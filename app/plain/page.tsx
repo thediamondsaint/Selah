@@ -58,13 +58,14 @@ Respond with ONLY the JSON object.`,
       })
 
       const data = await res.json()
+      if (!res.ok) throw new Error(data.error ?? `HTTP ${res.status}`)
       const parsed = JSON.parse(data.text)
       setDisplayRef(parsed.ref)
       setOriginal(parsed.kjv)
       setPlain(parsed.plain)
       setRef(parsed.ref)
-    } catch {
-      setError('Something went wrong. Please check the verse reference and try again.')
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Something went wrong. Please check the verse reference and try again.')
     } finally {
       setLoading(false)
     }
